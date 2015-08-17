@@ -26,6 +26,11 @@ package="com.rocdev.android.piet.newsreaderv3" >
         android:name="com.rocdev.android.piet.newsreaderv3.NewsReaderService"
         android:exported="false">
     </service>
+    <receiver android:name="BootReceiver">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+    </receiver>
 </application>
 
 </manifest>
