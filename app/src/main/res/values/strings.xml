@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">RSS Reader</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="items_title">Androidworld</string>
+    <string name="item_pub_date">Published: Fri 07 Sept 2012</string>
+    <string name="item_title">Item title</string>
+    <string name="item_description">Item description</string>
+    <string name="item_link">Ga naar het artikel</string>
+
+    <string name="menu_refresh">Ververs</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_test">TestActivity</string>
+</resources>
