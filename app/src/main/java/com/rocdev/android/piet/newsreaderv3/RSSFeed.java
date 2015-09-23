@@ -10,6 +10,7 @@ import java.util.Locale;
 
 @SuppressLint("SimpleDateFormat")
 public class RSSFeed {
+    public final static String NEW_FEED = "com.rocdev.android.piet.newsreaderv3.NEW_FEED";
     private String title = null;
     private String pubDate = null;
     private final ArrayList<RSSItem> items;

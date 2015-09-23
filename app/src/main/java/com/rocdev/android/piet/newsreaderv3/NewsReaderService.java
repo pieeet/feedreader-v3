@@ -119,6 +119,11 @@ public class NewsReaderService extends Service {
 
                 // display notification
                 sendNotification("Nieuwe feed beschikbaar.");
+
+                //stuur broadcast
+                Intent intent = new Intent(RSSFeed.NEW_FEED);
+                intent.putExtra("test", "test1 test2");
+                sendBroadcast(intent);
             }
             else {
                 Log.d("News reader", "Updated feed NOT available.");

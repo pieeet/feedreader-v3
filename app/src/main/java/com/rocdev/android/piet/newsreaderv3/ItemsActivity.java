@@ -1,11 +1,15 @@
 package com.rocdev.android.piet.newsreaderv3;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -19,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class ItemsActivity extends ActionBarActivity
+public class ItemsActivity extends AppCompatActivity
         implements OnItemClickListener {
 
     private RSSFeed feed;
@@ -28,6 +32,8 @@ public class ItemsActivity extends ActionBarActivity
 
     private TextView titleTextView;
     private ListView itemsListView;
+    private NewFeedReceiver newFeedReceiver;
+    private IntentFilter intentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +48,16 @@ public class ItemsActivity extends ActionBarActivity
         titleTextView = (TextView) findViewById(R.id.titleTextView);
         itemsListView = (ListView) findViewById(R.id.itemsListView);
         itemsListView.setOnItemClickListener(this);
+        intentFilter = new IntentFilter(RSSFeed.NEW_FEED);
+        newFeedReceiver = new NewFeedReceiver();
     }
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(newFeedReceiver, intentFilter);
         long feedPubDateMillis;
         //get feed from app object
         feedPubDateMillis = app.getFeedMillis();
@@ -62,6 +73,12 @@ public class ItemsActivity extends ActionBarActivity
             //alleen vertonen
             updateDisplay();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(newFeedReceiver);
+        super.onPause();
     }
 
     private class DownloadFeed extends AsyncTask<Void, Void, Void> {
@@ -154,5 +171,18 @@ public class ItemsActivity extends ActionBarActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_items, menu);
         return true;
+    }
+
+    class NewFeedReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("News reader", "Nieuw item ontvangen");
+
+            //eventueel data van de intent opvragen
+            String test = intent.getStringExtra("test");
+            Log.d("News reader", "test: " + test);
+            updateDisplay();
+        }
     }
 }
